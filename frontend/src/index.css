@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+@theme {
+  /* Luxury Earth Palette */
+  --color-brand-cream: #F9F7F2;
+  --color-brand-beige: #EBE5CE;
+  --color-brand-tan: #D6C4A6;
+  --color-brand-brown: #8B5E3C;
+  --color-brand-rust: #D4AF37; /* Muted Gold/Rust */
+  --color-brand-chocolate: #5D3A22;
+  --color-brand-coffee: #2C241E;
+  --color-brand-black: #1A120B;
+
+  /* Typography */
+  --font-serif: "Cormorant Garamond", serif;
+  --font-sans: "Montserrat", sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-brand-cream text-brand-coffee font-sans antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif font-semibold text-brand-coffee leading-tight;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-block px-8 py-3 bg-brand-coffee text-brand-cream uppercase tracking-[2px] text-xs font-medium border border-brand-coffee shadow-lg cursor-pointer;
+  }
+  
+  .btn-outline {
+    @apply inline-block px-8 py-3 bg-transparent text-brand-coffee uppercase tracking-[2px] text-xs font-medium border border-brand-coffee cursor-pointer;
+  }
+
+  .container-custom {
+    @apply max-w-[1400px] mx-auto px-6;
+  }
+  
+  /* Luxury Card Hover Effect */
+  .luxury-card {
+    @apply transition-all duration-500 hover:shadow-2xl hover:-translate-y-2;
+  }
+}

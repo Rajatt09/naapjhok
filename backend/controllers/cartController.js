@@ -1,102 +1,25 @@
-const Cart = require('../models/Cart');
+const cartService = require('../services/cartService');
+const { sendSuccess } = require('../utils/responseHandler');
+const asyncHandler = require('../utils/asyncHandler');
+const STATUS = require('../constants/statusCodes');
 
-exports.getCart = async (req, res) => {
-    try {
-        let cart = await Cart.findOne({ user: req.user.id });
-        if (!cart) {
-            cart = await Cart.create({ user: req.user.id, items: [] });
-        }
-        res.status(200).json({
-            status: 'success',
-            cart
-        });
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-};
+exports.getCart = asyncHandler(async (req, res) => {
+	const cart = await cartService.getCart(req.user.id);
+	return sendSuccess(res, STATUS.OK, { cart });
+});
 
-exports.addToCart = async (req, res) => {
-    try {
-        const { product, withFabric, profileId, customization } = req.body;
-        
-        let cart = await Cart.findOne({ user: req.user.id });
-        if (!cart) {
-            cart = new Cart({ user: req.user.id, items: [] });
-        }
+exports.addToCart = asyncHandler(async (req, res) => {
+	const { product, withFabric, profileId, customization } = req.body;
+	const itemData = { product, withFabric, profileId, customization };
 
-        const parsedProduct = typeof product === 'string' ? JSON.parse(product) : product;
-        const parsedCustomization = typeof customization === 'string' ? JSON.parse(customization) : customization;
-        const isWithFabric = withFabric === 'true' || withFabric === true;
+	const cart = await cartService.addToCart(req.user.id, itemData, req.file);
 
-        // Handle Image Upload
-        let referenceImageUrl = null;
-        if (req.file) {
-            // Check if cloudinary config exists, else fallback to local
-            const cloudinary = require('../config/cloudinary');
-            try {
-                // Upload to Cloudinary
-                const result = await cloudinary.uploader.upload(req.file.path, {
-                    folder: 'naapjhok/reference-images',
-                    use_filename: true,
-                    unique_filename: true
-                });
-                referenceImageUrl = result.secure_url;
-                
-                // Remove local file
-                const fs = require('fs');
-                if (fs.existsSync(req.file.path)) {
-                    fs.unlinkSync(req.file.path);
-                }
+	return sendSuccess(res, STATUS.OK, { cart }, 'Item added to cart');
+});
 
-            } catch (uploadErr) {
-                console.error('Cloudinary Upload Err:', uploadErr);
-                // Fallback to local path if Cloudinary fails (e.g. invalid credentials)
-                referenceImageUrl = `/uploads/reference-images/${req.file.filename}`;
-            }
-        }
+exports.removeFromCart = asyncHandler(async (req, res) => {
+	const { itemId } = req.params;
+	const cart = await cartService.removeFromCart(req.user.id, itemId);
 
-        const newItem = {
-            product: parsedProduct,
-            withFabric: isWithFabric,
-            profileId,
-            customization: parsedCustomization ? {
-                ...parsedCustomization,
-                referenceImage: referenceImageUrl || parsedCustomization.referenceImage
-            } : null
-        };
-
-        cart.items.push(newItem);
-        cart.updatedAt = Date.now();
-        await cart.save();
-
-        res.status(200).json({
-            status: 'success',
-            message: 'Item added to cart',
-            cart
-        });
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: err.message });
-    }
-};
-
-exports.removeFromCart = async (req, res) => {
-    try {
-        const { itemId } = req.params;
-        const cart = await Cart.findOne({ user: req.user.id });
-        
-        if (cart) {
-            // Efficiently remove item using MongoDB $pull operator atomic update
-            cart.items.pull({ _id: itemId });
-            await cart.save();
-        }
-
-        res.status(200).json({
-            status: 'success',
-            cart
-        });
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-};
+	return sendSuccess(res, STATUS.OK, { cart });
+});

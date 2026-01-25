@@ -1,87 +1,35 @@
-const User = require('../models/User');
+const userService = require('../services/userService');
+const { sendSuccess } = require('../utils/responseHandler');
+const asyncHandler = require('../utils/asyncHandler');
+const STATUS = require('../constants/statusCodes');
 
-// Add a new profile
-exports.addProfile = async (req, res) => {
-    try {
-        const user = await User.findById(req.user.id);
-        const newProfile = {
-            ...req.body, // name, phone, email, measurements
-            _id: undefined // Let Mongo generate subdoc ID
-        };
-        
-        // Check for duplicate name (case-insensitive)
-        const duplicate = user.profiles.find(p => p.name.toLowerCase() === newProfile.name.toLowerCase());
-        if (duplicate) {
-            return res.status(400).json({ message: 'A profile with this name already exists.' });
-        }
-        
-        user.profiles.push(newProfile);
-        await user.save();
+exports.addProfile = asyncHandler(async (req, res) => {
+	const result = await userService.addProfile(req.user.id, req.body);
+	return sendSuccess(res, STATUS.CREATED, {
+		profile: result.profile,
+		profiles: result.profiles,
+	});
+});
 
-        // Return the newly created profile (last in array)
-        const createdProfile = user.profiles[user.profiles.length - 1];
+exports.getProfiles = asyncHandler(async (req, res) => {
+	const result = await userService.getProfiles(req.user.id);
+	return sendSuccess(res, STATUS.OK, {
+		profiles: result.profiles,
+		user: result.user,
+	});
+});
 
-        res.status(201).json({
-            status: 'success',
-            profile: createdProfile,
-            profiles: user.profiles
-        });
-    } catch (err) {
-        res.status(400).json({ message: err.message });
-    }
-};
+exports.updateProfile = asyncHandler(async (req, res) => {
+	const result = await userService.updateProfile(req.user.id, req.params.id, req.body);
+	return sendSuccess(res, STATUS.OK, {
+		profile: result.profile,
+		profiles: result.profiles,
+	});
+});
 
-// Get all profiles
-exports.getProfiles = async (req, res) => {
-    try {
-        const user = await User.findById(req.user.id);
-        res.status(200).json({
-            status: 'success',
-            profiles: user.profiles
-        });
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-};
-
-// Update a profile
-exports.updateProfile = async (req, res) => {
-    try {
-        const user = await User.findById(req.user.id);
-        const profile = user.profiles.id(req.params.id);
-
-        if (!profile) {
-            return res.status(404).json({ message: 'Profile not found' });
-        }
-
-        // Update fields
-        Object.assign(profile, req.body);
-        await user.save();
-
-        res.status(200).json({
-            status: 'success',
-            profile,
-            profiles: user.profiles
-        });
-    } catch (err) {
-        res.status(400).json({ message: err.message });
-    }
-};
-
-// Delete a profile
-exports.deleteProfile = async (req, res) => {
-    try {
-        const user = await User.findById(req.user.id);
-        
-        // Mongoose subdocument pull
-        user.profiles.pull(req.params.id);
-        await user.save();
-
-        res.status(200).json({
-            status: 'success',
-            profiles: user.profiles
-        });
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-};
+exports.deleteProfile = asyncHandler(async (req, res) => {
+	const result = await userService.deleteProfile(req.user.id, req.params.id);
+	return sendSuccess(res, STATUS.OK, {
+		profiles: result.profiles,
+	}, 'Profile and all associated orders deleted.');
+});

@@ -48,7 +48,6 @@ const Signup = () => {
         if (res.success) {
             navigate('/');
         } else {
-            console.log(res);
             setError(res.message);
         }
     };

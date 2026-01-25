@@ -15,15 +15,21 @@ const ProfileModal = ({ isOpen, onClose, onSelectProfile }) => {
 
     if (!isOpen) return null;
 
-    const handleCreate = (e) => {
+    const handleCreate = async (e) => {
         e.preventDefault();
         if (!newProfile.name || !newProfile.phone) return;
         
-        const created = addProfile(newProfile);
-        onSelectProfile(created.id);
-        setNewProfile({ name: '', phone: '', email: '', address: '', measurements: '' });
-        setView('select');
-        onClose();
+        try {
+            const created = await addProfile(newProfile);
+            if (created) {
+                onSelectProfile(created._id || created.id);
+                setNewProfile({ name: '', phone: '', email: '', address: '', measurements: '' });
+                setView('select');
+                onClose();
+            }
+        } catch (error) {
+            // Error handling is done in addProfile
+        }
     };
 
     return (
@@ -44,8 +50,8 @@ const ProfileModal = ({ isOpen, onClose, onSelectProfile }) => {
                             <div className="grid gap-3 max-h-[60vh] overflow-y-auto">
                                 {profiles.map(profile => (
                                     <button 
-                                        key={profile.id}
-                                        onClick={() => { onSelectProfile(profile.id); onClose(); }}
+                                        key={profile._id || profile.id}
+                                        onClick={() => { onSelectProfile(profile._id || profile.id); onClose(); }}
                                         className="flex items-center gap-4 p-4 rounded-lg border border-brand-brown/10 bg-white hover:border-brand-rust hover:shadow-md transition-all text-left group"
                                     >
                                         <div className="w-10 h-10 rounded-full bg-brand-brown/10 flex items-center justify-center text-brand-coffee group-hover:bg-brand-rust group-hover:text-white transition-colors">

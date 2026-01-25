@@ -177,9 +177,14 @@ const AddToCartDrawer = ({ isOpen, onClose, product, withFabric }) => {
                                                 className={`w-full p-4 bg-white border ${errors.profile ? 'border-red-500' : 'border-brand-brown/20'} rounded-lg appearance-none focus:outline-none focus:border-brand-brown font-serif text-lg text-brand-coffee cursor-pointer transition-colors`}
                                             >
                                                 <option value="" disabled>Select a profile...</option>
-                                                {profiles.map(p => (
-                                                    <option key={p.id} value={p.id}>{p.name} {p.isSelf ? '(You)' : ''}</option>
-                                                ))}
+                                                {profiles.map(p => {
+                                                    const profileId = p._id || p.id;
+                                                    return (
+                                                        <option key={profileId} value={profileId}>
+                                                            {p.name} {p.isSelf ? '(You)' : ''}
+                                                        </option>
+                                                    );
+                                                })}
                                             </select>
                                             <ChevronRight className="absolute right-4 top-5 rotate-90 text-brand-taupe pointer-events-none" size={16} />
                                         </div>

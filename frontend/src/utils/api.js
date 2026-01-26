@@ -40,7 +40,7 @@ api.interceptors.response.use(
 
             try {
                 // Call refresh endpoint
-                const res = await axios.post('/api/auth/refresh-token', {}, { withCredentials: true });
+                const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/refresh-token`, {}, { withCredentials: true });
                 
                 // If successful, update access token
                 const newAccessToken = res.data.accessToken;

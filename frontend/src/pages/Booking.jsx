@@ -4,6 +4,7 @@ import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import Button from "../components/Button";
 import api from "../utils/api"; // Import api
+import { useToast } from "../context/ToastContext";
 import {
 	MapPin,
 	Phone,
@@ -25,6 +26,7 @@ const TIME_SLOTS = [
 
 const Booking = () => {
 	const { cart, profiles, removeFromCart } = useCart(); // Get profiles from context
+    const { addToast } = useToast();
 	const navigate = useNavigate();
 	const location = useLocation();
 
@@ -201,15 +203,17 @@ const Booking = () => {
 			// For now, let's manually remove from UI to be snappy, but real sync happens on refill.
 			bookingItems.forEach((item) => removeFromCart(item._id)); // Keep for UI callback
 
-			alert(
+			addToast(
 				`Appointment Booked for ${profileDetails ? profileDetails.name : "you"}!`,
+                'success'
 			);
 			navigate("/profile");
 		} catch (error) {
 			console.error(error);
-			alert(
+			addToast(
 				"Booking Failed: " +
 					(error.response?.data?.message || "Please try again."),
+                'error'
 			);
 		} finally {
 			setLoading(false);

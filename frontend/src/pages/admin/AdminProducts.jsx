@@ -4,9 +4,11 @@ import { useAuth } from "../../context/AuthContext";
 import { ChevronLeft, Plus, Edit, Trash2, X, Upload } from "lucide-react";
 import api from "../../utils/api";
 import Button from "../../components/Button";
+import { useToast } from "../../context/ToastContext";
 
 const AdminProducts = () => {
 	const { user } = useAuth();
+    const { addToast } = useToast();
 	const navigate = useNavigate();
 	const [products, setProducts] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -74,18 +76,18 @@ const AdminProducts = () => {
 				await api.put(`/products/${editingProduct._id}`, data, {
 					headers: { "Content-Type": "multipart/form-data" },
 				});
-				alert("Product updated successfully");
+				addToast("Product updated successfully", "success");
 			} else {
 				await api.post("/products", data, {
 					headers: { "Content-Type": "multipart/form-data" },
 				});
-				alert("Product added successfully");
+				addToast("Product added successfully", "success");
 			}
 			fetchProducts();
 			closeModal();
 		} catch (error) {
 			console.error("Error saving product:", error);
-			alert("Failed to save product");
+			addToast("Failed to save product", "error");
 		}
 	};
 
@@ -110,10 +112,10 @@ const AdminProducts = () => {
 		try {
 			await api.delete(`/products/${productId}`);
 			setProducts(products.filter((p) => p._id !== productId));
-			alert("Product deleted successfully");
+			addToast("Product deleted successfully", "success");
 		} catch (error) {
 			console.error("Error deleting product:", error);
-			alert("Failed to delete product");
+			addToast("Failed to delete product", "error");
 		}
 	};
 

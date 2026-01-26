@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import api from "../utils/api";
 import { useAuth } from "./AuthContext";
+import { useToast } from "./ToastContext";
 
 const CartContext = createContext(null);
 
@@ -8,6 +9,7 @@ export const CartProvider = ({ children }) => {
 	const [cart, setCart] = useState([]);
 	const [profiles, setProfiles] = useState([]);
 	const { user } = useAuth();
+    const { addToast } = useToast();
 	const [loading, setLoading] = useState(false);
 
 	// Fetch Cart & Profiles on load/user-change
@@ -204,12 +206,12 @@ export const CartProvider = ({ children }) => {
 				// Backend returns: { status: 'success', data: { cart: { items: [...] } } }
 				const cart = res.data.data?.cart || {};
 				setCart(cart.items || []);
-				alert("Item added to cart successfully!");
+				addToast("Item added to cart successfully!", "success");
 			}
 			return true; // Success
 		} catch (error) {
 			console.error("Add to cart failed", error);
-			alert("Failed to add item to cart. Please try again.");
+			addToast("Failed to add item to cart. Please try again.", "error");
 			return false;
 		}
 	};

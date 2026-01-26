@@ -13,9 +13,11 @@ import {
 } from "lucide-react";
 import api from "../../utils/api";
 import Button from "../../components/Button";
+import { useToast } from "../../context/ToastContext";
 
 const AdminUsers = () => {
 	const { user } = useAuth();
+    const { addToast } = useToast();
 	const navigate = useNavigate();
 	const [users, setUsers] = useState([]);
 	const [filteredUsers, setFilteredUsers] = useState([]);
@@ -86,10 +88,10 @@ const AdminUsers = () => {
 			await api.delete(`/admin/users/${userId}`);
 			setUsers(users.filter((u) => u._id !== userId));
 			setFilteredUsers(filteredUsers.filter((u) => u._id !== userId));
-			alert("User deleted successfully");
+			addToast("User deleted successfully", "success");
 		} catch (error) {
 			console.error("Error deleting user:", error);
-			alert("Failed to delete user");
+			addToast("Failed to delete user", "error");
 		}
 	};
 

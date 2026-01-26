@@ -11,10 +11,12 @@ import {
 	ShoppingBag,
 } from "lucide-react";
 import Button from "../components/Button";
+import { useToast } from "../context/ToastContext";
 
 const Cart = () => {
 	const { user } = useAuth();
 	const { cart, profiles, removeFromCart, getCartTotal } = useCart();
+    const { addToast } = useToast();
 	const navigate = useNavigate();
 	const location = useLocation();
 
@@ -395,8 +397,9 @@ const Cart = () => {
 																	item._id,
 																);
 															if (!success) {
-																alert(
+																addToast(
 																	"Failed to remove item. Please try again.",
+                                                                    "error"
 																);
 																setRemovingIds(
 																	(prev) =>

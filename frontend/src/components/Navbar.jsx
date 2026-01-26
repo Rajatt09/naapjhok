@@ -50,7 +50,7 @@ const Navbar = () => {
 		<>
 			{/* Top Promotion Strip - Dark & Slim */}
 			<div className="bg-brand-black text-brand-tan text-center py-2 text-[10px] md:text-xs font-medium tracking-[0.2em] uppercase font-sans relative z-[60]">
-				<p>Tailoring made timeless. Flat 20% Off - Code: NAAP20</p>
+				<p>Founding Client Privilege — available for a limited time.</p>
 			</div>
 
 			{/* Main Navbar */}
@@ -63,13 +63,13 @@ const Navbar = () => {
 						<div className="hidden md:flex gap-6">
 							<Link
 								to="/products"
-								className={`text-xs font-bold uppercase tracking-[2px] hover:text-brand-rust transition-colors ${showSolidNav ? "text-brand-coffee" : "text-brand-coffee md:text-white md:mix-blend-difference"}`}
+								className={`text-xs cursor-pointer font-bold uppercase tracking-[2px] hover:text-brand-rust transition-colors ${showSolidNav ? "text-brand-coffee" : "text-brand-coffee md:text-white md:mix-blend-difference"}`}
 							>
 								Collection
 							</Link>
 							<button
 								onClick={() => scrollToSection("how-it-works")}
-								className={`text-xs font-bold uppercase tracking-[2px] hover:text-brand-rust transition-colors ${showSolidNav ? "text-brand-coffee" : "text-brand-coffee md:text-white md:mix-blend-difference"}`}
+								className={`text-xs cursor-pointer font-bold uppercase tracking-[2px] hover:text-brand-rust transition-colors ${showSolidNav ? "text-brand-coffee" : "text-brand-coffee md:text-white md:mix-blend-difference"}`}
 							>
 								The Process
 							</button>
@@ -92,14 +92,14 @@ const Navbar = () => {
 						{!user ? (
 							<button
 								onClick={() => navigate("/login")}
-								className={`text-xs font-bold uppercase tracking-[2px] hover:text-brand-rust transition-colors ${showSolidNav ? "text-brand-coffee" : "text-brand-coffee md:text-white md:mix-blend-difference"}`}
+								className={`text-xs cursor-pointer font-bold uppercase tracking-[2px] hover:text-brand-rust transition-colors ${showSolidNav ? "text-brand-coffee" : "text-brand-coffee md:text-white md:mix-blend-difference"}`}
 							>
 								Login
 							</button>
 						) : (
 							<button
 								onClick={() => navigate("/profile")}
-								className={`transition-colors ${showSolidNav ? "text-brand-coffee" : "text-brand-coffee md:text-white md:mix-blend-difference"}`}
+								className={`transition-colors cursor-pointer ${showSolidNav ? "text-brand-coffee" : "text-brand-coffee md:text-white md:mix-blend-difference"}`}
 							>
 								<User size={20} />
 							</button>
@@ -108,7 +108,7 @@ const Navbar = () => {
 						{user && (
 							<button
 								onClick={() => navigate("/cart")}
-								className={`transition-colors relative ${showSolidNav ? "text-brand-coffee" : "text-brand-coffee md:text-white md:mix-blend-difference"}`}
+								className={`transition-colors cursor-pointer relative ${showSolidNav ? "text-brand-coffee" : "text-brand-coffee md:text-white md:mix-blend-difference"}`}
 							>
 								<ShoppingBag size={20} />
 								{cartCount > 0 && (
@@ -122,7 +122,7 @@ const Navbar = () => {
 						{/* Menu Button - Now on Right */}
 						<button
 							onClick={toggleMenu}
-							className={`group flex items-center gap-3 text-xs font-bold uppercase tracking-[2px] transition-colors ${showSolidNav ? "text-brand-coffee hover:text-brand-rust" : "text-brand-coffee hover:text-brand-rust md:text-white md:mix-blend-difference"}`}
+							className={`group cursor-pointer flex items-center gap-3 text-xs font-bold uppercase tracking-[2px] transition-colors ${showSolidNav ? "text-brand-coffee hover:text-brand-rust" : "text-brand-coffee hover:text-brand-rust md:text-white md:mix-blend-difference"}`}
 						>
 							<span className="hidden md:inline font-serif italic normal-case text-lg tracking-normal opacity-80 group-hover:opacity-100">
 								Menu
@@ -139,7 +139,7 @@ const Navbar = () => {
 
 			{/* Full Screen Luxury Menu Overlay */}
 			<div
-				className={`fixed inset-0 bg-brand-coffee z-[55] flex transition-transform duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] ${isMenuOpen ? "translate-y-0" : "-translate-y-full"}`}
+				className={`fixed inset-0 bg-brand-coffee z-[65] flex transition-transform duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] ${isMenuOpen ? "translate-y-0" : "-translate-y-full"}`}
 			>
 				{/* Left Side: Image/Brand (Hidden on Mobile) */}
 				<div className="hidden md:block w-1/3 h-full bg-[url('https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=2080')] bg-cover bg-center relative">
@@ -204,12 +204,12 @@ const Navbar = () => {
 							>
 								How it Works
 							</button>
-							<button
+							{/* <button
 								onClick={() => scrollToSection("stories")}
 								className="block text-left text-2xl md:text-3xl font-serif text-brand-coffee/80 hover:text-brand-brown hover:translate-x-2 transition-all"
 							>
 								Masterji ke Kisse
-							</button>
+							</button> */}
 							<button
 								onClick={() => scrollToSection("why-naapjhok")}
 								className="block text-left text-2xl md:text-3xl font-serif text-brand-coffee/80 hover:text-brand-brown hover:translate-x-2 transition-all"

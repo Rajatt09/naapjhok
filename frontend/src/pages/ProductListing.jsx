@@ -193,7 +193,7 @@ const FILTERS = {
 
 const ProductListing = () => {
 	const { addToCart } = useCart();
-	const [products, setProducts] = useState(MOCK_PRODUCTS);
+	const [products, setProducts] = useState([]);
 	const [loadingProducts, setLoadingProducts] = useState(true);
 
 	// State

@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Scissors, Ruler, Truck, ChevronRight, ChevronDown, ChevronUp, Star, Instagram, Facebook, Twitter, Mail, ArrowRight } from 'lucide-react';
+import { Scissors, Ruler, Truck, ChevronRight, ChevronDown, ChevronUp, Star, Instagram, Linkedin, MessageCircle, User } from 'lucide-react';
+import coat from "../assets/coat.png";
+import stitching from "../assets/mixkit.mp4";
 
 const LandingPage = () => {
     const navigate = useNavigate();
 
     return (
         <div className="w-full bg-brand-cream">
+            {/* ... (Previous Sections remain unchanged) ... */}
             
             {/* 1. HERO SECTION - Cinematic & Immersive */}
             <section className="relative h-screen w-full overflow-hidden" id="home">
-                {/* Video Background */}
-                <div className="absolute inset-0 w-full h-full">
+                 {/* Video Background */}
+                 <div className="absolute inset-0 w-full h-full">
                     <video autoPlay loop muted playsInline className="w-full h-full object-cover opacity-90">
-                        <source src="https://videos.pexels.com/video-files/3753733/3753733-uhd_2560_1440_24fps.mp4" type="video/mp4" />
+                        <source src={stitching} type="video/mp4" />
                     </video>
                     {/* Dark/Warm Overlay Gradient */}
                     <div className="absolute inset-0 bg-gradient-to-b from-brand-black/30 via-brand-coffee/20 to-brand-coffee/60 mix-blend-multiply"></div>
@@ -32,10 +35,10 @@ const LandingPage = () => {
                             "Where your measurements meet our masterpiece."
                         </p>
                         <div className="flex flex-col md:flex-row gap-6 justify-center">
-                            <button onClick={() => navigate('/book-appointment')} className="px-10 py-4 bg-brand-cream text-brand-coffee font-sans uppercase tracking-[2px] text-xs font-bold hover:bg-brand-tan transition-colors duration-300">
+                            <button onClick={() => navigate('/book-appointment')} className="px-10 py-4 cursor-pointer bg-brand-cream text-brand-coffee font-sans uppercase tracking-[2px] text-xs font-bold hover:bg-brand-tan transition-colors duration-300">
                                 Book Appointment
                             </button>
-                            <button onClick={() => navigate('/products')} className="px-10 py-4 bg-transparent border border-brand-cream text-brand-cream font-sans uppercase tracking-[2px] text-xs font-bold hover:bg-brand-cream hover:text-brand-coffee transition-colors duration-300">
+                            <button onClick={() => navigate('/products')} className="px-10 py-4 cursor-pointer bg-transparent border border-brand-cream text-brand-cream font-sans uppercase tracking-[2px] text-xs font-bold hover:bg-brand-cream hover:text-brand-coffee transition-colors duration-300">
                                 View Collection
                             </button>
                         </div>
@@ -155,8 +158,8 @@ const LandingPage = () => {
                                 <p className="text-brand-beige/80 text-lg font-serif italic leading-relaxed mb-6 border-l-2 border-brand-rust pl-6">
                                     "They said he could measure a man with a glance. Masterji Ramlal didn't just stitch suits; he stitched confidence. For 40 years, his hands have defined the silhouette of Delhi's elite. Today, he heads our Quality Council."
                                 </p>
-                                <button className="text-sm font-bold uppercase tracking-widest border-b border-brand-rust pb-1 text-brand-rust hover:text-brand-cream transition-colors">
-                                    Read Full Journal
+                                <button className="text-sm cursor-pointer font-bold uppercase tracking-widest border-b border-brand-rust pb-1 text-brand-rust hover:text-brand-cream transition-colors">
+                                    Read Full Journal - To be released soon :)
                                 </button>
                             </div>
                             
@@ -210,16 +213,15 @@ const LandingPage = () => {
                 <div className="container-custom">
                     <Star size={32} className="mx-auto text-brand-rust mb-6 fill-current" />
                     <h2 className="text-3xl md:text-5xl font-serif italic text-brand-coffee mb-12 leading-relaxed max-w-4xl mx-auto">
-                        "The suit fits like a second skin. I have never experienced such attention to detail before. Naapjhok is truly world-class."
+                        We bring world-class tailoring back to where it belongs—where every measurement is personal, every detail is precise, and every garment reflects the human skill behind it.
                     </h2>
                     <div className="flex items-center justify-center gap-4">
-                        <div className="w-12 h-12 rounded-full bg-brand-coffee overflow-hidden">
-                             {/* Placeholder avatar */}
-                             <div className="w-full h-full bg-gray-300"></div>
+                        <div className="w-12 h-12 rounded-full bg-brand-coffee/90 text-brand-cream flex items-center justify-center overflow-hidden border-2 border-brand-coffee shadow-lg">
+                             <User size={24} />
                         </div>
                         <div className="text-left">
-                            <p className="font-sans font-bold text-brand-coffee text-sm uppercase tracking-wider">Rajeev Malhotra</p>
-                            <p className="text-xs text-brand-brown">CEO, TechSpace</p>
+                            <p className="font-sans font-bold text-brand-coffee text-sm uppercase tracking-wider">Sanidhya Nigam</p>
+                            <p className="text-xs text-brand-brown">Director, Naapjhok</p>
                         </div>
                     </div>
                 </div>
@@ -248,15 +250,15 @@ const LandingPage = () => {
                             </p>
                             <div className="relative overflow-hidden group rounded-sm mb-8">
                                 <img 
-                                    src="https://images.unsplash.com/photo-1550614000-4b9519e09968?q=80&w=2070&auto=format&fit=crop" 
+                                    src={coat}
                                     alt="Tailoring details" 
                                     className="w-full aspect-[4/5] object-cover opacity-90 transition-transform duration-700 group-hover:scale-105"
                                 />
                                 <div className="absolute inset-0 bg-brand-coffee/10"></div>
                             </div>
-                            <button className="text-xs font-bold uppercase tracking-[2px] text-brand-coffee border-b border-brand-coffee hover:text-brand-rust hover:border-brand-rust transition-all pb-1">
-                                Contact Concierge
-                            </button>
+                            <span className="text-xs font-bold uppercase tracking-[2px] text-brand-coffee border-b border-brand-coffee transition-all pb-1">
+                                Naapjhok.in
+                            </span>
                         </div>
 
                         {/* Right Column: Accordion */}
@@ -313,14 +315,14 @@ const LandingPage = () => {
                                 Handcrafted in Delhi, for the ambitious. We blend the heritage of Indian craftsmanship with the convenience of modern technology.
                             </p>
                             <div className="flex gap-4">
-                                <a href="#" className="w-10 h-10 rounded-full border border-brand-tan/20 flex items-center justify-center hover:bg-brand-tan hover:text-brand-black transition-all">
+                                <a href="https://www.instagram.com/naapjhok.in?igsh=NzU2dnpmM216ZXdu" className="w-10 h-10 rounded-full border border-brand-tan/20 flex items-center justify-center hover:bg-brand-tan hover:text-brand-black transition-all" aria-label="Instagram">
                                     <Instagram size={18} />
                                 </a>
-                                <a href="#" className="w-10 h-10 rounded-full border border-brand-tan/20 flex items-center justify-center hover:bg-brand-tan hover:text-brand-black transition-all">
-                                    <Facebook size={18} />
+                                <a href="https://www.linkedin.com/company/naapjhok-india/" className="w-10 h-10 rounded-full border border-brand-tan/20 flex items-center justify-center hover:bg-brand-tan hover:text-brand-black transition-all" aria-label="LinkedIn">
+                                    <Linkedin size={18} />
                                 </a>
-                                <a href="#" className="w-10 h-10 rounded-full border border-brand-tan/20 flex items-center justify-center hover:bg-brand-tan hover:text-brand-black transition-all">
-                                    <Twitter size={18} />
+                                <a href="https://wa.me/+917985463989" className="w-10 h-10 rounded-full border border-brand-tan/20 flex items-center justify-center hover:bg-brand-tan hover:text-brand-black transition-all" aria-label="WhatsApp">
+                                    <MessageCircle size={18} />
                                 </a>
                             </div>
                         </div>
@@ -331,9 +333,7 @@ const LandingPage = () => {
                             <ul className="space-y-4 text-sm text-brand-tan/70">
                                 <li><a href="#" className="hover:text-brand-rust transition-colors">The Collection</a></li>
                                 <li><a href="#how-it-works" className="hover:text-brand-rust transition-colors">The Process</a></li>
-                                <li><a href="#stories" className="hover:text-brand-rust transition-colors">Masterji's Journal</a></li>
-                                <li><a href="#about-us" className="hover:text-brand-rust transition-colors">Our Philosophy</a></li>
-                                <li><a href="#" className="hover:text-brand-rust transition-colors">Gift Cards</a></li>
+                                {/* <li><a href="#stories" className="hover:text-brand-rust transition-colors">Masterji's Journal</a></li> */}
                             </ul>
                         </div>
 
@@ -341,34 +341,30 @@ const LandingPage = () => {
                         <div>
                             <h4 className="text-brand-cream font-sans font-bold text-xs uppercase tracking-[0.2em] mb-8">Concierge</h4>
                             <ul className="space-y-4 text-sm text-brand-tan/70">
-                                <li><a href="#" className="hover:text-brand-rust transition-colors">Book Appointment</a></li>
-                                <li><a href="#" className="hover:text-brand-rust transition-colors">Track Order</a></li>
-                                <li><a href="#" className="hover:text-brand-rust transition-colors">Size Guide</a></li>
-                                <li><a href="#faq" className="hover:text-brand-rust transition-colors">FAQ & Support</a></li>
-                                <li><a href="#" className="hover:text-brand-rust transition-colors">Fabric Care</a></li>
+                                <li><a href="#" className="hover:text-brand-rust cursor-pointer transition-colors">Book Appointment</a></li>
+                                {/* <li><a href="#" className="hover:text-brand-rust cursor-pointer transition-colors">Track Order</a></li> */}
+                                <li><a href="#faq" className="hover:text-brand-rust cursor-pointer transition-colors">FAQ & Support</a></li>
                             </ul>
                         </div>
 
-                        {/* 4. Newsletter */}
+                        {/* 4. Newsletter REMOVED (Replaced with Contact Info or empty) */}
                         <div>
-                            <h4 className="text-brand-cream font-sans font-bold text-xs uppercase tracking-[0.2em] mb-8">The Needle</h4>
-                            <p className="text-brand-tan/60 text-sm mb-6">Subscribe to receive sartorial advice and early access to new fabrics.</p>
-                            <form className="flex border-b border-brand-tan/30 pb-2">
-                                <input type="email" placeholder="Your email address" className="bg-transparent flex-1 text-brand-cream placeholder-brand-tan/30 focus:outline-none text-sm" />
-                                <button type="button" className="text-brand-tan hover:text-brand-rust transition-colors">
-                                    <ArrowRight size={20} />
-                                </button>
-                            </form>
+                             <h4 className="text-brand-cream font-sans font-bold text-xs uppercase tracking-[0.2em] mb-8">Contact Us</h4>
+                             <p className="text-brand-tan/60 text-sm leading-relaxed">
+                                 Questions? We are here to help.<br/>
+                                 +91 79854 63989<br/>
+                                 Monday to Sunday
+                             </p>
                         </div>
                     </div>
 
                     {/* Bottom Bar */}
                     <div className="pt-8 border-t border-brand-tan/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-brand-tan/40 uppercase tracking-widest">
                         <p>&copy; 2026 Naapjhok. All Rights Reserved.</p>
-                        <div className="flex gap-8">
+                        {/* <div className="flex gap-8">
                             <a href="#" className="hover:text-brand-tan transition-colors">Privacy Policy</a>
                             <a href="#" className="hover:text-brand-tan transition-colors">Terms of Service</a>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </footer>

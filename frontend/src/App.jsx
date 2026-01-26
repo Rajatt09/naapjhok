@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import { CartProvider } from "./context/CartContext";
+import { ToastProvider } from "./context/ToastContext";
 import Navbar from "./components/Navbar";
 import LandingPage from "./pages/LandingPage";
 import Login from "./pages/Login";
@@ -51,84 +52,86 @@ const AdminRoute = ({ children }) => {
 function App() {
 	return (
 		<AuthProvider>
-			<CartProvider>
-				<Router>
-					<div className="app-container">
-						<Navbar />
-						<Routes>
-							<Route path="/" element={<LandingPage />} />
-							<Route path="/login" element={<Login />} />
-							<Route path="/signup" element={<Signup />} />
-							<Route
-								path="/products"
-								element={<ProductListing />}
-							/>
+			<ToastProvider>
+				<CartProvider>
+					<Router>
+						<div className="app-container">
+							<Navbar />
+							<Routes>
+								<Route path="/" element={<LandingPage />} />
+								<Route path="/login" element={<Login />} />
+								<Route path="/signup" element={<Signup />} />
+								<Route
+									path="/products"
+									element={<ProductListing />}
+								/>
 
-							{/* Protected Routes */}
-							<Route
-								path="/cart"
-								element={
-									<ProtectedRoute>
-										<Cart />
-									</ProtectedRoute>
-								}
-							/>
-							<Route
-								path="/book-appointment"
-								element={
-									<ProtectedRoute>
-										<Booking />
-									</ProtectedRoute>
-								}
-							/>
-							<Route
-								path="/profile"
-								element={
-									<ProtectedRoute>
-										<Profile />
-									</ProtectedRoute>
-								}
-							/>
-						</Routes>
+								{/* Protected Routes */}
+								<Route
+									path="/cart"
+									element={
+										<ProtectedRoute>
+											<Cart />
+										</ProtectedRoute>
+									}
+								/>
+								<Route
+									path="/book-appointment"
+									element={
+										<ProtectedRoute>
+											<Booking />
+										</ProtectedRoute>
+									}
+								/>
+								<Route
+									path="/profile"
+									element={
+										<ProtectedRoute>
+											<Profile />
+										</ProtectedRoute>
+									}
+								/>
+							</Routes>
 
-						{/* Admin Routes */}
-						<Routes>
-							<Route
-								path="/admin"
-								element={
-									<AdminRoute>
-										<AdminDashboard />
-									</AdminRoute>
-								}
-							/>
-							<Route
-								path="/admin/users"
-								element={
-									<AdminRoute>
-										<AdminUsers />
-									</AdminRoute>
-								}
-							/>
-							<Route
-								path="/admin/products"
-								element={
-									<AdminRoute>
-										<AdminProducts />
-									</AdminRoute>
-								}
-							/>
-							<Route
-								path="/admin/orders"
-								element={
-									<AdminRoute>
-										<AdminOrders />
-									</AdminRoute>
-								}
-							/>
-						</Routes>
-					</div>
-				</Router>
-			</CartProvider>
+							{/* Admin Routes */}
+							<Routes>
+								<Route
+									path="/admin"
+									element={
+										<AdminRoute>
+											<AdminDashboard />
+										</AdminRoute>
+									}
+								/>
+								<Route
+									path="/admin/users"
+									element={
+										<AdminRoute>
+											<AdminUsers />
+										</AdminRoute>
+									}
+								/>
+								<Route
+									path="/admin/products"
+									element={
+										<AdminRoute>
+											<AdminProducts />
+										</AdminRoute>
+									}
+								/>
+								<Route
+									path="/admin/orders"
+									element={
+										<AdminRoute>
+											<AdminOrders />
+										</AdminRoute>
+									}
+								/>
+							</Routes>
+						</div>
+					</Router>
+				</CartProvider>
+			</ToastProvider>
 		</AuthProvider>
 	);
 }
